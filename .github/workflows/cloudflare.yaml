@@ -9,9 +9,13 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: clone
         run: |
-          bash ./deploy-vless.sh
+          git clone git@github.com:cmliu/edgetunnel.git
+
+      - name: Build & Deploy Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ./edgetunnel
