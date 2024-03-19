@@ -9,9 +9,11 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: clone
-        run: |
-          git clone git@github.com:cmliu/edgetunnel.git
+      - name: Check
+        uses: actions/checkout@master
+        with:
+          repository: cmliu/edgetunnel
+          token: ${{ secrets.GH_PAT }}
 
       - name: Build & Deploy Worker
         uses: cloudflare/wrangler-action@v3
